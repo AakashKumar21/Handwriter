@@ -1,7 +1,7 @@
 from PIL import ImageFont, Image, ImageDraw
 from random import randrange
 from math import log, sin
-from os import listdir
+from os import listdir, curdir
 from config import *
 
 # Font and Page
@@ -44,6 +44,9 @@ num_of_dots = 100
 background_entropy = 4
 path = "images\\random_bg\\"
 
+# File Names
+filename = ""
+img_list = []
 
 def create_bg():
     global img
@@ -68,7 +71,7 @@ def create_bg():
         pos_y += height
 
 # Create Objects and page
-font = ImageFont.truetype('myfont.ttf', font_size)
+font = ImageFont.truetype(font_name, font_size)
 img = Image.new('RGB', page_res["normal"], color = page_color)
 draw = ImageDraw.Draw(img)
 create_bg()
@@ -98,6 +101,7 @@ def start_writing(_filename):
             # print("WORD: ")
             write_word(word)
         insert_new_line()
+    save_image(filename + str(current_page))
 
 # returns a y point for x input
 def get_ypos(_x):
@@ -145,7 +149,7 @@ def test1():
     test_str = test_str.split()
     for word in test_str:
         write_word(word)
-    save_image("test" + str(current_page))
+    save_image(filename + str(current_page))
     # Writeline test
 
 
@@ -154,15 +158,16 @@ def write_word(_word):
     global pos_x
     global pos_y
     global current_page
+
     # Check if line if full
     width, height = draw.textsize(_word)
-    if (width + pos_x) >= page_res["normal"][0]: # Width full go to next line
+    if (width + pos_x + margin_x_right) >= page_res["normal"][0]: # Width full go to next line
         insert_new_line()
         # print("LINE FULL")
     
     # Check if page is full
     if (pos_y + margin_y_bottom) >= page_res["normal"][1]:
-        save_image("test" + str(current_page))
+        save_image(filename + str(current_page))
         current_page += 1
         create_page()
         # print("PAGE FULL")
@@ -186,10 +191,44 @@ def write_word(_word):
 
 
 def save_image(_filename):
-    img.save('images/'+_filename+'.png')
+    img_dir = 'images/'
+    img.save(img_dir + _filename + '.png')
+    img_list.append(img_dir + filename + str(current_page) + '.png')
+
+
+def save_pdf(_filename):
+    print("Creating PDF")
+    image_object_list = []
+    print("Adding Image:", img_list[0])
+    img = Image.open(img_list[0]) # will hold a single image object
+    img_list.pop(0)
+
+    for fname in img_list:
+        print("Adding Image:", fname)
+        image_object_list.append(Image.open(fname)) 
+    img.save('pdf/' + _filename + '.pdf',save_all=True, append_images=image_object_list)
+
+
+def get_texts_and_write():
+    # Get file names
+    global filename
+    global img_list
+    text_files_list = []
+    all_files = listdir(curdir)
+    print("Text Files Found:")
+    for fil in all_files:
+        if ".txt" in fil:
+            text_files_list.append(fil)
+            print(fil)
+
+    # For each file create images
+    for textfile in text_files_list:
+        img_list.clear()
+        filename = textfile.replace(".txt",'') + '_'
+        start_writing(textfile)
+        save_pdf(filename)
 
 create_page()
+get_texts_and_write()
 # test1()
-start_writing("as1.txt")
-save_image("test"+str(current_page))
 print("Created: Pages:{}, Lines:{}".format(str(count_page), str(count_lines)))

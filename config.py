@@ -1,4 +1,6 @@
 # General Settings
+font_name = '...ttf'
+
 # Quality of output image
 quality = "normal"
 # Font size in px
@@ -17,6 +19,8 @@ line_gap = 7
 line_gap_entropy_percent = 15
 # Margin from left in px
 margin_x = 10
+# Margin from right in px
+margin_x_right = 10
 # Margin from Top in px
 margin_y = 10
 # Margin from Botom in px
@@ -39,7 +43,7 @@ line_slope_entropy_font_div = 3.5
 
 # Line Slanting Style
 # 0: Straight line no slant
-# 1: Slight slant
+# 1: Slight slant, Best one
 # 2: Style 2
 # 3: Hard steep changing, not that good
 # 4: Custom formula 
@@ -47,4 +51,4 @@ line_slope_entropy_font_div = 3.5
 # def custom_formula(x):
 #     y = m*(x+c)
 #     return y
-line_slanting_stlye = 3
+line_slanting_stlye = 2

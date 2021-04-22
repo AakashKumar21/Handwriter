@@ -8,3 +8,5 @@ images/test2.png
 images/test1.png
 images/test0.png
 __pycache__/config.cpython-39.pyc
+*.ttf
+*.pdf
