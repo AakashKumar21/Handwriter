@@ -1,12 +1,12 @@
 # General Settings
-font_name = '...ttf'
+font_name = 'Aakash.ttf'
 
 # Quality of output image
 quality = "normal"
 # Font size in px
 font_size = 34
 # Space between letters
-letter_space = 4
+letter_space = 7
 # Page color in RGB
 page_color = (255,255,255)
 # Text color in RGB
@@ -20,7 +20,7 @@ line_gap_entropy_percent = 15
 # Margin from left in px
 margin_x = 10
 # Margin from right in px
-margin_x_right = 10
+margin_x_right = 30
 # Margin from Top in px
 margin_y = 10
 # Margin from Botom in px
