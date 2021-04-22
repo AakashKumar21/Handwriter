@@ -6,7 +6,7 @@ quality = "normal"
 # Font size in px
 font_size = 34
 # Space between letters
-letter_space = 7
+letter_space = -4
 # Page color in RGB
 page_color = (255,255,255)
 # Text color in RGB
@@ -51,4 +51,4 @@ line_slope_entropy_font_div = 3.5
 # def custom_formula(x):
 #     y = m*(x+c)
 #     return y
-line_slanting_stlye = 2
+line_slanting_stlye = 1

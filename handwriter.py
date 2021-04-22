@@ -160,7 +160,7 @@ def write_word(_word):
     global current_page
 
     # Check if line if full
-    width, height = draw.textsize(_word)
+    width, height = draw.textsize(_word, font = font)
     if (width + pos_x + margin_x_right) >= page_res["normal"][0]: # Width full go to next line
         insert_new_line()
         # print("LINE FULL")
@@ -177,14 +177,14 @@ def write_word(_word):
     for letter in _word:
         letter_height_entropy = randrange(-letter_entropy_max,letter_entropy_max)
         total_ent = word_ypos_entropy + letter_height_entropy
-        width, height = draw.textsize(letter)
+        width, height = draw.textsize(letter, font = font)
         draw.text((pos_x, pos_y + word_ypos_entropy + total_ent), letter, font=font, fill=text_color)
         pos_x += width + letter_space
         # pos_y += height
     # Give space after word
     space = ' '*word_space
     draw.text((pos_x, pos_y), space, font=font, fill=text_color)
-    width, height = draw.textsize(space)
+    width, height = draw.textsize(space, font = font)
     pos_x += width
     # pos_y += height
     return 0
