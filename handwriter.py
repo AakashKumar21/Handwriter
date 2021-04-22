@@ -2,49 +2,30 @@ from PIL import ImageFont, Image, ImageDraw
 from random import randrange
 from math import log, sin
 from os import listdir
+from config import *
 
 # Font and Page
-font_size = 34
 page_res = {"normal":(800,1128), "high":(1200,1692)}
-page_color = (255,255,255)
-text_color = (0,0,0)
-word_space = 3
-letter_space = 4
-line_gap = 7
-line_gap_entropy_percent = 15
 line_gap_min = font_size + line_gap
-line_gap_entropy_max = 10
+line_gap_entropy_max = line_gap_entropy_percent - 5
 current_page = 0
-margin_x = 10
-margin_y = 10
-margin_y_bottom = 80
 # line_gap_entropy_max = int(line_gap_entropy_percent/100) * font_size
 
 # Line Related
-line_slope = 3
-line_var_a = 0
-line_sin_para_div = 10
-line_sin_div = 2
-line_slope_x_power = 1/3
-line_slope_entropy_percent = 5
-line_slope_entropy_font_div = 3.5
 line_slope_entropy_max = int((line_slope_entropy_percent/100) * font_size/line_slope_entropy_font_div)
 
 # Letter and Word Entropy
-letter_entropy_percent = 3
-word_entropy_percent = 3
-letter_gap = 1
 letter_entropy_max = int((letter_entropy_percent/100) * font_size)
 word_entropy_max = int((word_entropy_percent/100) * font_size)
 
 # Check entropy
-if line_gap_entropy_max == 0:
+if line_gap_entropy_max <= 0:
     line_gap_entropy_max = 1
-if line_slope_entropy_max == 0:
+if line_slope_entropy_max <= 0:
     line_slope_entropy_max = 1
-if letter_entropy_max == 0:
+if letter_entropy_max <= 0:
     letter_entropy_max = 1
-if word_entropy_max == 0:
+if word_entropy_max <= 0:
     word_entropy_max = 1
 
 # Starting pos
@@ -92,15 +73,6 @@ img = Image.new('RGB', page_res["normal"], color = page_color)
 draw = ImageDraw.Draw(img)
 create_bg()
 
-def add_dots():
-    for i in range(num_of_dots):
-        coordinate = (randrange(page_res["normal"][0]), randrange(page_res["normal"][0]), randrange(max_dot_rad), randrange(max_dot_rad))
-        print(coordinate)
-        # draw.ellipse(coordinate, fill=(255, 0, 0), outline=(0, 0, 0))
-        draw.t
-# add_dots()
-# draw.ellipse((20, 20, 180, 180), fill = 'blue', outline ='blue')
-
 
 def create_page():
     global pos_x
@@ -129,9 +101,16 @@ def start_writing(_filename):
 
 # returns a y point for x input
 def get_ypos(_x):
-    # y = line_slope*(_x**(1/5)) - ( sin(_x/line_sin_para_div) / line_sin_div)
-    # y = line_slope*(_x**(line_slope_x_power) - sin(-_x/200) ) - sin(_x)
-    y = line_slope*(_x**(1/4) - (sin((_x+60)/15))/4)
+    if   line_slanting_stlye == 0:
+        y = 0
+    elif line_slanting_stlye == 1:
+        y = line_slope*(_x**(1/4) - (sin((_x+60)/15))/4)
+    elif line_slanting_stlye == 2:
+        y = line_slope*(_x**(1/5)) - ( sin(_x/line_sin_para_div) / line_sin_div)
+    elif line_slanting_stlye == 3:
+        y = line_slope*(_x**(line_slope_x_power) - sin(-_x/200) ) - sin(_x)
+    else: 
+        y = custom_formula(_x)
     return y 
 
 def insert_new_line():
