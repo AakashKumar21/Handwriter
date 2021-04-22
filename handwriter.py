@@ -76,13 +76,15 @@ def create_bg():
 
     pos_x = 0
     pos_y = 0
-    for i in range(background_entropy*background_entropy):
-        bg_img = Image.open(path + bg_parts[randrange(len(bg_parts))])
-        img.paste(bg_img, (pos_x, pos_y))
-        width, height = bg_img.size
-        pos_x += width
+    width, height = 0,0
+    for row in range(background_entropy*background_entropy):
+        for col in range(4):
+            bg_img = Image.open(path + bg_parts[randrange(len(bg_parts))])
+            img.paste(bg_img, (pos_x, pos_y))
+            width, height = bg_img.size
+            pos_x += width
+        pos_x = 0
         pos_y += height
-    img.show()
 
 # Create Objects and page
 font = ImageFont.truetype('myfont.ttf', font_size)
