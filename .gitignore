@@ -1,12 +1,7 @@
 
-images/test.png
+images/
 myfont.ttf
-images/test5.png
-images/test4.png
-images/test3.png
-images/test2.png
-images/test1.png
-images/test0.png
 __pycache__/config.cpython-39.pyc
 *.ttf
 *.pdf
+images/as1_2.png
