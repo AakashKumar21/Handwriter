@@ -1,6 +1,7 @@
 from PIL import ImageFont, Image, ImageDraw
 from random import randrange
 from math import log, sin
+from os import listdir
 
 # Font and Page
 font_size = 34
@@ -12,10 +13,11 @@ letter_space = 4
 line_gap = 7
 line_gap_entropy_percent = 15
 line_gap_min = font_size + line_gap
-line_gap_entropy_max = 20
+line_gap_entropy_max = 10
 current_page = 0
 margin_x = 10
 margin_y = 10
+margin_y_bottom = 80
 # line_gap_entropy_max = int(line_gap_entropy_percent/100) * font_size
 
 # Line Related
@@ -35,24 +37,82 @@ letter_gap = 1
 letter_entropy_max = int((letter_entropy_percent/100) * font_size)
 word_entropy_max = int((word_entropy_percent/100) * font_size)
 
+# Check entropy
+if line_gap_entropy_max == 0:
+    line_gap_entropy_max = 1
+if line_slope_entropy_max == 0:
+    line_slope_entropy_max = 1
+if letter_entropy_max == 0:
+    letter_entropy_max = 1
+if word_entropy_max == 0:
+    word_entropy_max = 1
+
 # Starting pos
 pos_x = margin_x
 pos_y = margin_y
+
+# Counters
+count_page = 0
+count_lines = 1
+
+# Random Noise
+max_dot_rad = 10
+num_of_dots = 100
+
+# Background
+background_entropy = 4
+path = "images\\random_bg\\"
+
+
+def create_bg():
+    global img
+    # Get file names
+    bg_parts = []
+    if background_entropy == 4:
+        all_parts = listdir(path)
+        for part in all_parts:
+            if "cross_4" in part:
+                bg_parts.append(part)
+
+    pos_x = 0
+    pos_y = 0
+    for i in range(background_entropy*background_entropy):
+        bg_img = Image.open(path + bg_parts[randrange(len(bg_parts))])
+        img.paste(bg_img, (pos_x, pos_y))
+        width, height = bg_img.size
+        pos_x += width
+        pos_y += height
+    img.show()
 
 # Create Objects and page
 font = ImageFont.truetype('myfont.ttf', font_size)
 img = Image.new('RGB', page_res["normal"], color = page_color)
 draw = ImageDraw.Draw(img)
+create_bg()
+
+def add_dots():
+    for i in range(num_of_dots):
+        coordinate = (randrange(page_res["normal"][0]), randrange(page_res["normal"][0]), randrange(max_dot_rad), randrange(max_dot_rad))
+        print(coordinate)
+        # draw.ellipse(coordinate, fill=(255, 0, 0), outline=(0, 0, 0))
+        draw.t
+# add_dots()
+# draw.ellipse((20, 20, 180, 180), fill = 'blue', outline ='blue')
+
 
 def create_page():
     global pos_x
     global pos_y
     global img
     global draw
+    global count_page
     img = Image.new('RGB', page_res["normal"], color = page_color)
     draw = ImageDraw.Draw(img)
+    create_bg()
     pos_x = margin_x
     pos_y = margin_y
+    count_page += 1
+    
 
 
 def start_writing(_filename):
@@ -75,8 +135,10 @@ def get_ypos(_x):
 def insert_new_line():
     global pos_x
     global pos_y
+    global count_lines
     pos_y += line_gap_min + randrange(-line_gap_entropy_max, line_gap_entropy_max)
     pos_x = margin_x
+    count_lines += 1
 
 def print_info():
     print("HANDWRITER")
@@ -115,13 +177,14 @@ def write_word(_word):
     width, height = draw.textsize(_word)
     if (width + pos_x) >= page_res["normal"][0]: # Width full go to next line
         insert_new_line()
-        print("LINE FULL")
+        # print("LINE FULL")
     
-    if pos_y >= page_res["normal"][1]:
+    # Check if page is full
+    if (pos_y + margin_y_bottom) >= page_res["normal"][1]:
         save_image("test" + str(current_page))
         current_page += 1
         create_page()
-        print("PAGE FULL")
+        # print("PAGE FULL")
 
     word_ypos_entropy = randrange(-word_entropy_max, word_entropy_max) + log(pos_y) + get_ypos(pos_x)
     # Write the word
@@ -148,3 +211,4 @@ create_page()
 # test1()
 start_writing("as1.txt")
 save_image("test"+str(current_page))
+print("Created: Pages:{}, Lines:{}".format(str(count_page), str(count_lines)))
