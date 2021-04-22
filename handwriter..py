@@ -29,8 +29,9 @@ line_slope_entropy_font_div = 3.5
 line_slope_entropy_max = int((line_slope_entropy_percent/100) * font_size/line_slope_entropy_font_div)
 
 # Letter and Word Entropy
-letter_entropy_percent = 6
-word_entropy_percent = 4
+letter_entropy_percent = 3
+word_entropy_percent = 3
+letter_gap = 1
 letter_entropy_max = int((letter_entropy_percent/100) * font_size)
 word_entropy_max = int((word_entropy_percent/100) * font_size)
 
@@ -66,8 +67,9 @@ def start_writing(_filename):
 
 # returns a y point for x input
 def get_ypos(_x):
-    y = line_slope*(_x**(1/4)) - ( sin(_x/line_sin_para_div) / line_sin_div)
+    # y = line_slope*(_x**(1/5)) - ( sin(_x/line_sin_para_div) / line_sin_div)
     # y = line_slope*(_x**(line_slope_x_power) - sin(-_x/200) ) - sin(_x)
+    y = line_slope*(_x**(1/4) - (sin((_x+60)/15))/4)
     return y 
 
 def insert_new_line():
