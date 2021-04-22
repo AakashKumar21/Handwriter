@@ -1,0 +1,8 @@
+CGMMT Assignment 1
+Abhishek Sharma
+ECE 8C
+35196502817
+
+ANS 1:  
+Projection is defined as mapping of three-dimensional points to a two-dimensional plane. There are two type of projection parallel and perspective. 
+1)Parallel Projection : Parallel projections are used by architects and engineers for creating working drawing of the object, for complete representations require two or more views of an object using different planes. Parallel Projection use to display picture in its true shape and size. When projectors are perpendicular to view plane then is called orthographic projection. The parallel projection is formed by extending parallel lines from each vertex on the object until they intersect the plane of the screen. The point of intersection is the projection of vertex
