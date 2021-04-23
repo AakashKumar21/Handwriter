@@ -98,12 +98,13 @@ def create_page():
     global img
     global draw
     global count_page
+    count_page += 1
+    # print("Page: ", count_page)
     img = Image.new('RGB', PAGE_RES["normal"], color=PAGE_COLOR)
     draw = ImageDraw.Draw(img)
     _create_bg()
     pos_x = MARGIN_LEFT
     pos_y = MARGIN_TOP
-    count_page += 1
 
 
 def start_writing(_filename):
@@ -136,10 +137,11 @@ def insert_new_line():
     global pos_x
     global pos_y
     global count_lines
+    count_lines += 1
+    # print("Line: ", count_lines)
     pos_y += LINE_GAP_MIN + \
         randrange(-LINE_GAP_ENTROPY_MAX, LINE_GAP_ENTROPY_MAX)
     pos_x = MARGIN_LEFT
-    count_lines += 1
 
 
 def print_info():
@@ -206,6 +208,7 @@ def write_word(_word):
 
 def save_image(_filename):
     global current_img_lst
+    global count_page
     img_dir = 'images/'
     img.save(img_dir + _filename + '.png')
     current_img_lst.append(img_dir + current_filename + str(current_page) + '.png')
@@ -213,14 +216,18 @@ def save_image(_filename):
 
 def save_pdf(_filename):
     global current_img_lst
-    print("Creating PDF")
+    global count_page, count_lines
+    print("Creating PDF: ", _filename)
+    print("Pages: ", count_page)
+    print("Lines: ", count_lines)
+    print()
     image_object_list = []
-    print("Adding Image:", current_img_lst[0])
+    # print("Adding Image:", current_img_lst[0])
     img = Image.open(current_img_lst[0])  # will hold a single image object
     current_img_lst.pop(0)
 
     for fname in current_img_lst:
-        print("Adding Image:", fname)
+        # print("Adding Image:", fname)
         image_object_list.append(Image.open(fname))
     img.save('pdf/' + _filename + '.pdf', save_all=True,
              append_images=image_object_list)
@@ -250,4 +257,3 @@ if __name__ == "__main__":
         set_max_entropy_values()
         create_page()
         get_texts_and_write(filenames)
-        print("Created: Pages:{}, Lines:{}".format(str(count_page), str(count_lines)))
