@@ -1,7 +1,10 @@
 
 images/
+__pycache__/
 myfont.ttf
-__pycache__/config.cpython-39.pyc
 *.ttf
 *.pdf
 images/as1_2.png
+.vscode/.ropeproject/
+test.py
+test.py
