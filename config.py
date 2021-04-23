@@ -8,9 +8,9 @@ font_size = 34
 # Space between letters
 letter_space = -4
 # Page color in RGB
-page_color = (255,255,255)
+page_color = (255, 255, 255)
 # Text color in RGB
-text_color = (0,0,0)
+text_color = (0, 0, 0)
 # Space between words
 word_space = 3
 # Vertical line gap
@@ -46,7 +46,7 @@ line_slope_entropy_font_div = 3.5
 # 1: Slight slant, Best one
 # 2: Style 2
 # 3: Hard steep changing, not that good
-# 4: Custom formula 
+# 4: Custom formula
 # for example
 # def custom_formula(x):
 #     y = m*(x+c)
