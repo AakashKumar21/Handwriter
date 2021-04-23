@@ -2,43 +2,40 @@
 font_name = 'Aakash.ttf'
 
 # Quality of output image
-quality = "normal"
+QUALITY = "normal"
 # Font size in px
-font_size = 34
+FONT_SIZE = 34
 # Space between letters
-letter_space = -4
+LETTER_SPACE = -4
 # Page color in RGB
-page_color = (255, 255, 255)
+PAGE_COLOR = (255, 255, 255)
 # Text color in RGB
-text_color = (0, 0, 0)
+TEXT_COLOR = (0, 0, 0)
 # Space between words
-word_space = 3
+WORD_SPACE = 3
 # Vertical line gap
-line_gap = 7
+LINE_GAP = 7
 # Percentage of Randomnes in Vertical line gap
-line_gap_entropy_percent = 15
-# Margin from left in px
-margin_x = 10
-# Margin from right in px
-margin_x_right = 30
-# Margin from Top in px
-margin_y = 10
-# Margin from Botom in px
-margin_y_bottom = 80
+LINE_GAP_ENTROPY_PC = 15
+# MARGINS
+MARGIN_LEFT = 10
+MARGIN_RIGHT = 30
+MARGIN_TOP = 10
+MARGIN_BOTTOM = 80
 # Percentage of Randomnes in Letter gap
-letter_entropy_percent = 3
+LETTER_ENTROPY_PC = 3
 # Percentage of Randomnes in Word gap
-word_entropy_percent = 3
+WORD_ENTROPY_PC = 3
 
 
 # Line Slope Settings
-line_slope = 3
-line_var_a = 0
-line_sin_para_div = 10
-line_sin_div = 2
-line_slope_x_power = 1/3
-line_slope_entropy_percent = 5
-line_slope_entropy_font_div = 3.5
+LINE_SLOPE = 3
+LINE_VAR_A = 0
+LINE_SIN_PARA_DIV = 10
+LINE_SIN_DIV = 2
+LINE_SLOPE_X_POWER = 1/3
+LINE_SLOPE_ENTROPY_PC = 5
+LINE_SLOPE_ENTROPY_FONT_DIV = 3.5
 
 
 # Line Slanting Style
@@ -51,4 +48,4 @@ line_slope_entropy_font_div = 3.5
 # def custom_formula(x):
 #     y = m*(x+c)
 #     return y
-line_slanting_stlye = 1
+LINE_SLANTNNG_STLYE = 1

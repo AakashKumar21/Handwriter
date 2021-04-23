@@ -6,18 +6,18 @@ from config import *
 
 # Font and Page
 page_res = {"normal": (800, 1128), "high": (1200, 1692)}
-line_gap_min = font_size + line_gap
-line_gap_entropy_max = line_gap_entropy_percent - 5
+line_gap_min = FONT_SIZE + LINE_GAP
+line_gap_entropy_max = LINE_GAP_ENTROPY_PC - 5
 current_page = 0
 # line_gap_entropy_max = int(line_gap_entropy_percent/100) * font_size
 
 # Line Related
 line_slope_entropy_max = int(
-    (line_slope_entropy_percent/100) * font_size/line_slope_entropy_font_div)
+    (LINE_SLOPE_ENTROPY_PC/100) * FONT_SIZE/LINE_SLOPE_ENTROPY_FONT_DIV)
 
 # Letter and Word Entropy
-letter_entropy_max = int((letter_entropy_percent/100) * font_size)
-word_entropy_max = int((word_entropy_percent/100) * font_size)
+letter_entropy_max = int((LETTER_ENTROPY_PC/100) * FONT_SIZE)
+word_entropy_max = int((WORD_ENTROPY_PC/100) * FONT_SIZE)
 
 # Check entropy
 if line_gap_entropy_max <= 0:
@@ -30,8 +30,8 @@ if word_entropy_max <= 0:
     word_entropy_max = 1
 
 # Starting pos
-pos_x = margin_x
-pos_y = margin_y
+pos_x = MARGIN_LEFT
+pos_y = MARGIN_TOP
 
 # Counters
 count_page = 0
@@ -74,8 +74,8 @@ def create_bg():
 
 
 # Create Objects and page
-font = ImageFont.truetype(font_name, font_size)
-img = Image.new('RGB', page_res["normal"], color=page_color)
+font = ImageFont.truetype(font_name, FONT_SIZE)
+img = Image.new('RGB', page_res["normal"], color=PAGE_COLOR)
 draw = ImageDraw.Draw(img)
 create_bg()
 
@@ -86,11 +86,11 @@ def create_page():
     global img
     global draw
     global count_page
-    img = Image.new('RGB', page_res["normal"], color=page_color)
+    img = Image.new('RGB', page_res["normal"], color=PAGE_COLOR)
     draw = ImageDraw.Draw(img)
     create_bg()
-    pos_x = margin_x
-    pos_y = margin_y
+    pos_x = MARGIN_LEFT
+    pos_y = MARGIN_TOP
     count_page += 1
 
 
@@ -109,14 +109,14 @@ def start_writing(_filename):
 
 
 def get_ypos(_x):
-    if line_slanting_stlye == 0:
+    if LINE_SLANTNNG_STLYE == 0:
         y = 0
-    elif line_slanting_stlye == 1:
-        y = line_slope*(_x**(1/4) - (sin((_x+60)/15))/4)
-    elif line_slanting_stlye == 2:
-        y = line_slope*(_x**(1/5)) - (sin(_x/line_sin_para_div) / line_sin_div)
-    elif line_slanting_stlye == 3:
-        y = line_slope*(_x**(line_slope_x_power) - sin(-_x/200)) - sin(_x)
+    elif LINE_SLANTNNG_STLYE == 1:
+        y = LINE_SLOPE*(_x**(1/4) - (sin((_x+60)/15))/4)
+    elif LINE_SLANTNNG_STLYE == 2:
+        y = LINE_SLOPE*(_x**(1/5)) - (sin(_x/LINE_SIN_PARA_DIV) / LINE_SIN_DIV)
+    elif LINE_SLANTNNG_STLYE == 3:
+        y = LINE_SLOPE*(_x**LINE_SLOPE_X_POWER - sin(-_x/200)) - sin(_x)
     else:
         y = custom_formula(_x)
     return y
@@ -128,26 +128,26 @@ def insert_new_line():
     global count_lines
     pos_y += line_gap_min + \
         randrange(-line_gap_entropy_max, line_gap_entropy_max)
-    pos_x = margin_x
+    pos_x = MARGIN_LEFT
     count_lines += 1
 
 
 def print_info():
     print("HANDWRITER")
     print("Page Res: ", page_res)
-    print("page_color:", page_color)
-    print("text_color:", text_color)
-    print("word_space:", word_space)
-    print("letter_space:", letter_space)
+    print("page_color:", PAGE_COLOR)
+    print("text_color:", TEXT_COLOR)
+    print("word_space:", WORD_SPACE)
+    print("letter_space:", LETTER_SPACE)
     print("letter_entropy_max:", letter_entropy_max)
     print("word_entropy_max:", word_entropy_max)
-    print("line_slope:", line_slope)
-    print("line_var_a:", line_var_a)
-    print("line_sin_para_div", line_sin_div)
-    print("line_slope_entropy_percent:", line_slope_entropy_percent)
-    print("line_slope_entropy_font_div:", line_slope_entropy_font_div)
+    print("line_slope:", LINE_SLOPE)
+    print("line_var_a:", LINE_VAR_A)
+    print("line_sin_para_div", LINE_SIN_DIV)
+    print("line_slope_entropy_percent:", LINE_SLOPE_ENTROPY_PC)
+    print("line_slope_entropy_font_div:", LINE_SLOPE_ENTROPY_FONT_DIV)
     print("line_slope_entropy_max:", line_slope_entropy_max)
-    print("line_slope_x_power", line_slope_x_power)
+    print("line_slope_x_power", LINE_SLOPE_X_POWER)
     # print("",)
 
 
@@ -170,12 +170,12 @@ def write_word(_word):
     # Check if line if full
     width, height = draw.textsize(_word, font=font)
     # Width full go to next line
-    if (width + pos_x + margin_x_right) >= page_res["normal"][0]:
+    if (width + pos_x + MARGIN_RIGHT) >= page_res["normal"][0]:
         insert_new_line()
         # print("LINE FULL")
 
     # Check if page is full
-    if (pos_y + margin_y_bottom) >= page_res["normal"][1]:
+    if (pos_y + MARGIN_BOTTOM) >= page_res["normal"][1]:
         save_image(filename + str(current_page))
         current_page += 1
         create_page()
@@ -190,12 +190,12 @@ def write_word(_word):
         total_ent = word_ypos_entropy + letter_height_entropy
         width, height = draw.textsize(letter, font=font)
         draw.text((pos_x, pos_y + word_ypos_entropy + total_ent),
-                  letter, font=font, fill=text_color)
-        pos_x += width + letter_space
+                  letter, font=font, fill=TEXT_COLOR)
+        pos_x += width + LETTER_SPACE
         # pos_y += height
     # Give space after word
-    space = ' '*word_space
-    draw.text((pos_x, pos_y), space, font=font, fill=text_color)
+    space = ' '*WORD_SPACE
+    draw.text((pos_x, pos_y), space, font=font, fill=TEXT_COLOR)
     width, height = draw.textsize(space, font=font)
     pos_x += width
     # pos_y += height
