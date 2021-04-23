@@ -3,6 +3,7 @@ from random import randrange
 from math import log, sin
 from os import listdir, curdir
 from config import *
+import sys
 
 PAGE_RES = {"normal": (800, 1128), "high": (1200, 1692)}
 
@@ -225,32 +226,28 @@ def save_pdf(_filename):
              append_images=image_object_list)
 
 
-def get_texts_and_write():
+def get_texts_and_write(_filename):
     # Get file names
     global filename
     global current_img_lst
-    text_files_list = []
-    all_files = listdir(curdir)
-    print("Text Files Found:")
-    for fil in all_files:
-        if ".txt" in fil:
-            text_files_list.append(fil)
-            print(fil)
 
-    # For each file create images
-    for textfile in text_files_list:
-        current_img_lst.clear()
-        current_filename = textfile.replace(".txt", '') + '_'
-        start_writing(textfile)
-        save_pdf(current_filename)
-        set_initial_values()
-
-def main():
+    current_img_lst.clear()
+    current_filename = _filename.replace(".txt", '') + '_'
+    start_writing(_filename)
+    save_pdf(current_filename)
     set_initial_values()
-    set_max_entropy_values()
-    create_page()
-    get_texts_and_write()
-    print("Created: Pages:{}, Lines:{}".format(str(count_page), str(count_lines)))
-    
 
-main()
+
+if __name__ == "__main__":
+    global textfile
+    global count_page, count_lines
+    opts = [opt for opt in sys.argv[1:] if opt.startswith("-")]
+    args = [arg for arg in sys.argv[1:] if not arg.startswith("-")]
+    if not '-f' in opts:
+        raise SystemExit("NO TEXT FILE PROVIDED")
+    for filenames in args:
+        set_initial_values()
+        set_max_entropy_values()
+        create_page()
+        get_texts_and_write(filenames)
+        print("Created: Pages:{}, Lines:{}".format(str(count_page), str(count_lines)))
