@@ -1,10 +1,10 @@
-![](E:\Handwriter\images\logo.png)
+![](/images/logo.png)
 
 No one loves writing assignments (except some diamonds), so I made this tool to convert text into realistic looking handwritten text.
 
 # Output
 
-![sample](E:\Handwriter\images\sample.jpeg)
+![sample](/images/sample.jpeg)
 
 # How to Install
 
