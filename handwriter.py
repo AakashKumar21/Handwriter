@@ -1,9 +1,10 @@
 from PIL import ImageFont, Image, ImageDraw
 from random import randrange
 from math import log, sin
-from os import listdir, curdir
+from os import listdir, curdir, remove
 from config import *
 import sys
+from progress.bar import Bar,IncrementalBar,ChargingBar
 
 PAGE_RES = {"normal": (800, 1128), "high": (1200, 1692)}
 
@@ -55,10 +56,12 @@ def set_initial_values():
     global background_entropy
     global current_filename, current_img_lst, current_page
     global BG_PATH, FONT, FONT_SIZE
+    global current_progress
     # Counters
     count_page = 0
     count_lines = 1
     current_page = 0
+    current_progress = 0
     # Background
     background_entropy = 4
     BG_PATH = "images\\random_bg\\"
@@ -109,12 +112,19 @@ def create_page():
 
 def start_writing(_filename):
     global current_filename
+    global current_progress
+    global bar
+    current_line = 0
     f = open(_filename, 'r')
     file_lines_list = f.read().split('\n')  # GET LINES
+    bar = ChargingBar('Processing', max=len(file_lines_list))
     for line in file_lines_list:            # For each lines
+        bar.next()
         for word in line.split():           # For each words
             write_word(word)
         insert_new_line()
+        current_line += 1
+    bar.finish()
     save_image(current_filename + str(current_page))
 
 
@@ -216,7 +226,8 @@ def save_image(_filename):
 
 def save_pdf(_filename):
     global current_img_lst
-    global count_page, count_lines
+    global count_page, count_lines, current_progress
+    current_progress = 0
     print("Creating PDF: ", _filename)
     print("Pages: ", count_page)
     print("Lines: ", count_lines)
@@ -224,13 +235,14 @@ def save_pdf(_filename):
     image_object_list = []
     # print("Adding Image:", current_img_lst[0])
     img = Image.open(current_img_lst[0])  # will hold a single image object
-    current_img_lst.pop(0)
 
-    for fname in current_img_lst:
+    for fname in current_img_lst[1:]:
         # print("Adding Image:", fname)
         image_object_list.append(Image.open(fname))
     img.save('pdf/' + _filename + '.pdf', save_all=True,
              append_images=image_object_list)
+    for files in current_img_lst:
+        remove(files)
 
 
 def get_texts_and_write(_filename):
@@ -250,10 +262,16 @@ if __name__ == "__main__":
     global count_page, count_lines
     opts = [opt for opt in sys.argv[1:] if opt.startswith("-")]
     args = [arg for arg in sys.argv[1:] if not arg.startswith("-")]
-    if not '-f' in opts:
+    textfiles = [f for f in args if f.endswith('.txt')]
+    fontfiles = [f for f in args if f.endswith('.ttf')]
+    if len(fontfiles) > 0:
+        font_name = fontfiles[0]
+    else:
+        raise SystemExit("NO FONT FILE PROVIDED")
+    if len(textfiles) == 0:
         raise SystemExit("NO TEXT FILE PROVIDED")
-    for filenames in args:
+    for files in textfiles:
         set_initial_values()
         set_max_entropy_values()
         create_page()
-        get_texts_and_write(filenames)
+        get_texts_and_write(files)
