@@ -1,5 +1,4 @@
 
-images/
 __pycache__/
 myfont.ttf
 *.ttf
@@ -8,3 +7,4 @@ images/as1_2.png
 .vscode/.ropeproject/
 test.py
 test.py
+as1.txt
