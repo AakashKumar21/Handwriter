@@ -189,7 +189,7 @@ def write_word(_word):
         # print("LINE FULL")
 
     # Check if page is full
-    if (pos_y + MARGIN_BOTTOM) >= PAGE_RES["normal"][1]:
+    if (pos_y + MARGIN_BOTTOM + MARGIN_TOP) >= PAGE_RES["normal"][1]:
         save_image(current_filename + str(current_page))
         current_page += 1
         create_page()

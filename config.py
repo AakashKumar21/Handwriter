@@ -19,9 +19,9 @@ LINE_GAP = 7
 LINE_GAP_ENTROPY_PC = 15
 # MARGINS
 MARGIN_LEFT = 10
-MARGIN_RIGHT = 30
+MARGIN_RIGHT = 10
 MARGIN_TOP = 10
-MARGIN_BOTTOM = 80
+MARGIN_BOTTOM = 40
 # Percentage of Randomnes in Letter gap
 LETTER_ENTROPY_PC = 3
 # Percentage of Randomnes in Word gap
