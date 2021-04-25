@@ -2,6 +2,8 @@
 
 No one loves writing assignments (except some diamonds), so I made this tool to convert text into realistic looking handwritten text.
 
+![visitors](https://visitor-badge.glitch.me/badge?page_id=handwriter_hsakaa)
+
 # Output
 
 ![sample](/images/sample.jpeg)
