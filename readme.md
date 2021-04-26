@@ -44,6 +44,10 @@ This will generate PDF files in pdf folder with same name as text file
 
 For now you can change variables in config.py to suit your needs. Each handwriting may require different configuration.
 
+## Todo
+- [ ] Add GUI (WebApp or App)
+- [ ] Background Transparency
+
 # Need Contribution 
 
 For making this tool more robust, adding GUI and making a good readme :).
