@@ -1,0 +1,4 @@
+Simple symbols = " ' ; : , . /? | - +
+Bad Symbols    = “ ” ’ ‘ ❟ — ……
+
+FFF

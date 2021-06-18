@@ -109,14 +109,44 @@ def create_page():
     pos_x = MARGIN_LEFT
     pos_y = MARGIN_TOP
 
+    
+def letter_replacer(letter):
+    if letter in ['\“','\”',"\""]:
+        return '\"'
+    elif letter in ['\’','\‘', '\'']:
+        return '\''
+    elif letter == '—':
+        return '-'
+    elif letter == '❟':
+        return ','
+    else: 
+        return letter
+
+def sanitize_text(file):
+    text = file.read()
+    new_text = ""
+    for t in text:
+        if not t.isalnum():
+            new_text += letter_replacer(t)
+        elif not t.isprintable():
+            new_text += ' '
+        elif t.isspace():
+            new_text += ' '
+        elif t == '…':
+            return '...'
+        else:
+            new_text += t
+    return new_text
+
 
 def start_writing(_filename):
     global current_filename
     global current_progress
     global bar
     current_line = 0
-    f = open(_filename, 'r')
-    file_lines_list = f.read().split('\n')  # GET LINES
+    f = open(_filename, 'r', errors="ignore", encoding='utf-8')
+    file_text_sanitised = sanitize_text(f)
+    file_lines_list = file_text_sanitised.split('\n')  # GET LINES
     bar = ChargingBar('Processing', max=len(file_lines_list))
     for line in file_lines_list:            # For each lines
         bar.next()

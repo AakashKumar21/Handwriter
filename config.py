@@ -6,7 +6,7 @@ QUALITY = "normal"
 # Font size in px
 FONT_SIZE = 34
 # Space between letters
-LETTER_SPACE = -4
+LETTER_SPACE = 0
 # Page color in RGB
 PAGE_COLOR = (255, 255, 255)
 # Text color in RGB
@@ -29,7 +29,7 @@ WORD_ENTROPY_PC = 3
 
 
 # Line Slope Settings
-LINE_SLOPE = 3
+LINE_SLOPE = 2
 LINE_VAR_A = 0
 LINE_SIN_PARA_DIV = 10
 LINE_SIN_DIV = 2
