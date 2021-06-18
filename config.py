@@ -23,6 +23,7 @@ MARGIN_RIGHT = 10
 MARGIN_TOP = 10
 MARGIN_BOTTOM = 40
 MARGIN_BOTTOM_MULTIPLIER_ON_PAGE_NO = 2
+MARGIN_BOTTOM_PAGE_NO = 50
 # Percentage of Randomnes in Letter gap
 LETTER_ENTROPY_PC = 3
 # Percentage of Randomnes in Word gap

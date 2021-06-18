@@ -247,7 +247,7 @@ def write_word(_word):
 
 def insert_page_no():
     insert_new_line()
-    draw.text( (PAGE_RES['normal'][0]/2, pos_y), str(current_page+1), font=FONT, fill=TEXT_COLOR)
+    draw.text( (PAGE_RES['normal'][0]/2, PAGE_RES['normal'][1] - MARGIN_BOTTOM_PAGE_NO), str(current_page+1), font=FONT, fill=TEXT_COLOR)
 
 def save_image(_filename):
     global current_img_lst
