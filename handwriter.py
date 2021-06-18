@@ -245,10 +245,17 @@ def write_word(_word):
     # pos_y += height
     return 0
 
+def insert_page_no():
+    insert_new_line()
+    draw.text( (PAGE_RES['normal'][0]/2, pos_y), str(current_page+1), font=FONT, fill=TEXT_COLOR)
 
 def save_image(_filename):
     global current_img_lst
     global count_page
+    global add_page_no
+    if add_page_no:
+        insert_page_no()
+
     img_dir = 'images/'
     img.save(img_dir + _filename + '.png')
     current_img_lst.append(img_dir + current_filename + str(current_page) + '.png')
@@ -290,10 +297,15 @@ def get_texts_and_write(_filename):
 if __name__ == "__main__":
     global textfile
     global count_page, count_lines
+    global add_page_no
     opts = [opt for opt in sys.argv[1:] if opt.startswith("-")]
     args = [arg for arg in sys.argv[1:] if not arg.startswith("-")]
     textfiles = [f for f in args if f.endswith('.txt')]
     fontfiles = [f for f in args if f.endswith('.ttf')]
+    if 'page_no' in args:
+        print("Options: Add page number")
+        MARGIN_BOTTOM += MARGIN_BOTTOM*MARGIN_BOTTOM_MULTIPLIER_ON_PAGE_NO
+        add_page_no = True
     if len(fontfiles) > 0:
         font_name = fontfiles[0]
     else:

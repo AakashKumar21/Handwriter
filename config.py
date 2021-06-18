@@ -14,7 +14,7 @@ TEXT_COLOR = (0, 0, 0)
 # Space between words
 WORD_SPACE = 3
 # Vertical line gap
-LINE_GAP = 7
+LINE_GAP = 10
 # Percentage of Randomnes in Vertical line gap
 LINE_GAP_ENTROPY_PC = 15
 # MARGINS
@@ -22,6 +22,7 @@ MARGIN_LEFT = 10
 MARGIN_RIGHT = 10
 MARGIN_TOP = 10
 MARGIN_BOTTOM = 40
+MARGIN_BOTTOM_MULTIPLIER_ON_PAGE_NO = 2
 # Percentage of Randomnes in Letter gap
 LETTER_ENTROPY_PC = 3
 # Percentage of Randomnes in Word gap
