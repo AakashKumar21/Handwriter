@@ -298,6 +298,7 @@ if __name__ == "__main__":
     global textfile
     global count_page, count_lines
     global add_page_no
+    add_page_no = 0
     opts = [opt for opt in sys.argv[1:] if opt.startswith("-")]
     args = [arg for arg in sys.argv[1:] if not arg.startswith("-")]
     textfiles = [f for f in args if f.endswith('.txt')]
