@@ -46,6 +46,9 @@ python3 handwriter.py text_file1.txt text_file_2.txt ... font_file.ttf page_no
 
 This will generate PDF files in pdf folder with same name as text file
 
+### Adding new page 
+Add this character '↩' (without quotes) in text file where you want new page to begin.
+
 ## Configuring output generation
 
 For now you can change variables in config.py to suit your needs. Each handwriting may require different configuration.
