@@ -5,6 +5,7 @@ from os import listdir, curdir, remove, makedirs, path
 from config import *
 import sys
 from progress.bar import Bar,IncrementalBar,ChargingBar
+import platform
 
 PAGE_RES = {"normal": (800, 1128), "high": (1200, 1692)}
 
@@ -64,7 +65,10 @@ def set_initial_values():
     current_progress = 0
     # Background
     background_entropy = 4
-    BG_PATH = "images\\random_bg\\"
+    if platform.system() == 'Windows':
+        BG_PATH = "images\\random_bg\\"
+    else:
+        BG_PATH = "images/random_bg/"
     FONT = ImageFont.truetype(font_name, FONT_SIZE)
     # File Names
     current_filename = ""
