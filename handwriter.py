@@ -1,5 +1,5 @@
-from PIL import ImageFont, Image, ImageDraw
-from random import randrange
+from PIL import ImageFont, Image, ImageDraw, ImageFilter
+from random import randint, randrange
 from math import log, sin
 from os import listdir, curdir, remove, makedirs, path
 from config import *
@@ -64,7 +64,7 @@ def set_initial_values():
     current_page = 0
     current_progress = 0
     # Background
-    background_entropy = 4
+    background_entropy = 5
     if platform.system() == 'Windows':
         BG_PATH = "images\\random_bg\\"
     else:
@@ -76,23 +76,45 @@ def set_initial_values():
     reset_xy_pos()
 
 
+def _get_transparent_bg(_t, _img):
+    rgba = _img.convert("RGB")
+    raw_data = rgba.getdata()
+    new_data = []
+    for data in raw_data:
+        # px_data = (data[0],data[1], data[2], int(255*0.0))
+        rand_i = randint(0,2)
+        px_data = [data[0],data[1], data[2]]
+        px_data[rand_i] = 255
+        px_data = tuple(px_data)
+        new_data.append(px_data)
+    _img.putdata(new_data)
+    return _img
+
 def _create_bg():
     global img
+    global random_signature
+    random_signature = []
     # Get file names
     bg_parts = []
-    if background_entropy == 4:
-        all_parts = listdir(BG_PATH)
-        for part in all_parts:
-            if "cross_4" in part:
-                bg_parts.append(part)
+    all_parts = listdir(BG_PATH)
+    for part in all_parts:
+        if "cross_4" in part:
+            bg_parts.append(part)
 
     pos_x = 0
     pos_y = 0
     width, height = 0, 0
-    for row in range(background_entropy*background_entropy):
+    for row in range(6):
         for col in range(4):
-            bg_img = Image.open(BG_PATH + bg_parts[randrange(len(bg_parts))])
+            rand_bg_file_no = randrange(len(bg_parts))
+            random_signature.append(rand_bg_file_no)
+            bg_img = Image.open(BG_PATH + bg_parts[rand_bg_file_no])
+            if BG_TRANS_ENABLE == 1:
+                # bg_img = bg_img.convert('RGB').filter(ImageFilter.SMOOTH)
+                # bg_img = _get_transparent_bg(BG_TRANS_VALUE, bg_img)
+                pass
             img.paste(bg_img, (pos_x, pos_y))
+            bg_img.close()
             width, height = bg_img.size
             pos_x += width
         pos_x = 0
@@ -131,7 +153,7 @@ def sanitize_text(file):
     new_text = ""
     for t in text:
         if not t.isalnum():
-            new_text += letter_replacer(t)
+            new_text += t
         elif not t.isprintable():
             new_text += ' '
         elif t.isspace():
@@ -274,10 +296,12 @@ def save_image(_filename):
 def save_pdf(_filename):
     global current_img_lst
     global count_page, count_lines, current_progress
+    global random_signature
     current_progress = 0
     print("Creating PDF: ", _filename)
     print("Pages: ", count_page)
     print("Lines: ", count_lines)
+    print("BG Signature:", random_signature)
     print()
     image_object_list = []
     # print("Adding Image:", current_img_lst[0])
