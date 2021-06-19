@@ -49,7 +49,11 @@ This will generate PDF files in pdf folder with same name as text file
 ### Adding new page 
 Add this character '↩' (without quotes) in text file where you want new page to begin.
 
-## Configuring output generation
+### Custom Background
+You can add custom background images, by putting images starting with name *cross_4* in *images folder*, 
+make sure image size is minimum of 230*230 pixels, better if all image size is same.
+
+### Configuring output generation
 
 For now you can change variables in config.py to suit your needs. Each handwriting may require different configuration.
 
