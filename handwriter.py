@@ -233,6 +233,12 @@ def write_word(_word):
                                   WORD_ENTROPY_MAX) + log(pos_y) + get_ypos(pos_x)
     # Write the word
     for letter in _word:
+        # Check of enter symbol, for adding new page
+        if letter == '↩': # TODO can be made func
+            save_image(current_filename + str(current_page))
+            current_page += 1
+            create_page()
+            
         letter_height_entropy = randrange(-LETTER_ENTROPY_MAX,
                                           LETTER_ENTROPY_MAX)
         total_ent = word_ypos_entropy + letter_height_entropy
