@@ -29,6 +29,8 @@ Create Two font packs for **Alphabets + Numbers** and **Symbols**.
 Now using a https://fontforge.org/ you can merge that two font into one.
 Paste the font in repo folder
 
+**Note:** Every font is different so it may require some tweaking in config.py.
+
 ## Using the CLI
 
 ``` python 
@@ -37,6 +39,10 @@ python3 handwriter.py text_file1.txt text_file_2.txt ... font_file.ttf
 python3 handwriter.py assignment1.txt myfont.ttf
 python3 handwriter.py assignment1.txt assignment2.txt myfont.ttf
 ```
+### Add page numbers
+``` python
+python3 handwriter.py text_file1.txt text_file_2.txt ... font_file.ttf page_no
+```
 
 This will generate PDF files in pdf folder with same name as text file
 
@@ -44,9 +50,14 @@ This will generate PDF files in pdf folder with same name as text file
 
 For now you can change variables in config.py to suit your needs. Each handwriting may require different configuration.
 
+
 ## Todo
 - [ ] Add GUI (WebApp or App)
 - [ ] Background Transparency
+- [ ] Add page resolution selection
+- [ ] Add Background noise color option
+- [ ] Add text color option
+- [ ] Add fallback font option
 
 # Need Contribution 
 

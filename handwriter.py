@@ -1,7 +1,7 @@
 from PIL import ImageFont, Image, ImageDraw
 from random import randrange
 from math import log, sin
-from os import listdir, curdir, remove
+from os import listdir, curdir, remove, makedirs, path
 from config import *
 import sys
 from progress.bar import Bar,IncrementalBar,ChargingBar
@@ -293,11 +293,16 @@ def get_texts_and_write(_filename):
     save_pdf(current_filename)
     set_initial_values()
 
+def create_folder():
+    if not path.exists('pdf//'):
+        print("Creating pdf folder")
+        makedirs('pdf//')
 
 if __name__ == "__main__":
     global textfile
     global count_page, count_lines
     global add_page_no
+    create_folder()
     add_page_no = 0
     opts = [opt for opt in sys.argv[1:] if opt.startswith("-")]
     args = [arg for arg in sys.argv[1:] if not arg.startswith("-")]
