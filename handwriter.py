@@ -238,15 +238,15 @@ def write_word(_word):
             save_image(current_filename + str(current_page))
             current_page += 1
             create_page()
-            
-        letter_height_entropy = randrange(-LETTER_ENTROPY_MAX,
-                                          LETTER_ENTROPY_MAX)
-        total_ent = word_ypos_entropy + letter_height_entropy
-        width, height = draw.textsize(letter, font=FONT)
-        draw.text((pos_x, pos_y + word_ypos_entropy + total_ent),
-                  letter, font=FONT, fill=TEXT_COLOR)
-        pos_x += width + LETTER_SPACE
-        # pos_y += height
+        else:
+            letter_height_entropy = randrange(-LETTER_ENTROPY_MAX,
+                                            LETTER_ENTROPY_MAX)
+            total_ent = word_ypos_entropy + letter_height_entropy
+            width, height = draw.textsize(letter, font=FONT)
+            draw.text((pos_x, pos_y + word_ypos_entropy + total_ent),
+                    letter, font=FONT, fill=TEXT_COLOR)
+            pos_x += width + LETTER_SPACE
+            # pos_y += height
     # Give space after word
     space = ' '*WORD_SPACE
     draw.text((pos_x, pos_y), space, font=FONT, fill=TEXT_COLOR)
